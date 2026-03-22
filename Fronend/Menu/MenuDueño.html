@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Abarrotes ABD - Dueño</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="MenuDueño.css">
+    </head>
+    <body>
+        <!-- Modal para alertas -->
+        <div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="alertModalTitle">Atención</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="alertModalBody">
+                        Mensaje de alerta
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="Login.html">
+                    <i class="bi bi-shop me-2"></i>Abarrotes ABD
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="MenuDueño.html" id="registrarVentaBtn">
+                                <i class="bi bi-cart-plus me-1"></i>Registrar Venta
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Inventario.html" id="inventarioBtn">
+                                <i class="bi bi-boxes me-1"></i>Inventario
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Precios.html" id="clientesBtn">
+                                <i class="bi bi-tag me-1"></i>Consultar Precios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Reportes.html" id="reportesBtn">
+                                <i class="bi bi-graph-up me-1"></i>Reportes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="PagosProveedores.html" id="configuracionBtn">
+                                <i class="bi bi-truck me-1"></i>Pagos a Proveedores
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="navbar-text text-white">
+                        <i class="bi bi-person-circle me-1"></i>Usuario: <span class="fw-bold">Dueño</span>
+                        <button class="btn btn-outline-light btn-sm ms-3" id="cerrarCajaBtn">
+                            <i class="bi bi-cash-stack me-1"></i>Cerrar Caja
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container mt-4">
+            <!-- Banner de caja cerrada -->
+            <div class="alert alert-warning d-none mb-3" id="cajaCerradaAlert">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+                    <div>
+                        <h5 class="mb-1">Caja Cerrada</h5>
+                        <p class="mb-0">La caja ha sido cerrada. No se pueden registrar nuevas ventas hasta el siguiente día.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="display-5 mb-4">
+                        <i class="bi bi-cart-plus text-primary me-2"></i>Registrar Venta
+                    </h1>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-basket me-2"></i>Productos en la Venta
+                            </h5>
+                            <span class="badge bg-primary">Venta #<span id="numeroVenta">001</span></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Precio Unitario</th>
+                                            <th scope="col">Subtotal</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productosVenta">
+                                        <tr id="sinProductos">
+                                            <td colspan="5" class="text-center text-muted py-4">
+                                                <i class="bi bi-basket display-6 d-block mb-2"></i>
+                                                No hay productos agregados a la venta
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Formulario para agregar productos -->
+                            <div class="border-top pt-3 mt-3">
+                                <h6 class="mb-3">
+                                    <i class="bi bi-plus-circle me-1"></i>Agregar Producto
+                                </h6>
+                                <div class="row g-3">
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="nombreProducto" placeholder="Nombre del producto" disabled>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control" id="cantidadProducto" placeholder="Cantidad" min="1" value="1" disabled>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success w-100" id="agregarProductoBtn" disabled>
+                                            <i class="bi bi-plus-lg me-1"></i>Agregar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panel de resumen y total -->
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="card shadow-sm sticky-top" style="top: 20px;">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-receipt me-2"></i>Resumen de Venta
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">
+                                    <i class="bi bi-box me-1"></i>Cantidad de Productos
+                                </h6>
+                                <div class="display-6 fw-bold text-primary" id="cantidadProductosTotal">0</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">
+                                    <i class="bi bi-currency-dollar me-1"></i>Total a Pagar
+                                </h6>
+                                <div class="display-5 fw-bold text-success" id="totalPagar">$0.00</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="metodoPago" class="form-label">
+                                    <i class="bi bi-credit-card me-1"></i>Método de Pago
+                                </label>
+                                <select class="form-select" id="metodoPago" disabled>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="tarjeta">Tarjeta</option>
+                                    <option value="transferencia">Transferencia</option>
+                                </select>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-lg" id="guardarVentaBtn" disabled>
+                                    <i class="bi bi-save me-2"></i>Guardar Venta
+                                </button>
+                                
+                                <button class="btn btn-outline-secondary" id="limpiarVentaBtn" disabled>
+                                    <i class="bi bi-trash me-2"></i>Limpiar Venta
+                                </button>
+                                
+                                <button class="btn btn-outline-success" id="imprimirComprobanteBtn" disabled>
+                                    <i class="bi bi-printer me-2"></i>Imprimir Comprobante
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección del comprobante -->
+            <div class="row mt-4 d-none" id="comprobanteSection">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">
+                                <i class="bi bi-receipt-cutoff me-2"></i>Comprobante de Venta
+                            </h4>
+                            <div>
+                                <button class="btn btn-light btn-sm me-2" id="imprimirComprobanteDirecto">
+                                    <i class="bi bi-printer me-1"></i>Imprimir
+                                </button>
+                                <button class="btn btn-light btn-sm" id="cerrarComprobante">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" id="comprobanteContent">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="MenuDueño.js"></script>
+    </body>
+</html>
