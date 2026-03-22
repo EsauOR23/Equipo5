@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Abarrotes ABD - Consultar Precios</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="Precios.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="Login.html">
+                    <i class="bi bi-shop me-2"></i>Abarrotes ABD
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="MenuDueño.html" id="registrarVentaBtn">
+                                <i class="bi bi-cart-plus me-1"></i>Registrar Venta
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Inventario.html" id="inventarioBtn">
+                                <i class="bi bi-boxes me-1"></i>Inventario
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Precios.html" id="clientesBtn">
+                                <i class="bi bi-tag me-1"></i>Consultar Precios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Reportes.html" id="reportesBtn">
+                                <i class="bi bi-graph-up me-1"></i>Reportes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="PagosProveedores.html" id="configuracionBtn">
+                                <i class="bi bi-truck me-1"></i>Pagos a Proveedores
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="navbar-text text-white">
+                        <i class="bi bi-person-circle me-1"></i>Usuario: <span class="fw-bold">Dueño</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenido principal -->
+        <main class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="display-5 mb-0">
+                            <i class="bi bi-tag text-primary me-2"></i>Consultar Precios
+                        </h1>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" id="exportarPreciosBtn" title="Exportar Lista de Precios">
+                                <i class="bi bi-file-earmark-excel me-1"></i>Exportar Precios
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtros de búsqueda -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <label for="buscarProductoPrecios" class="form-label">
+                                        <i class="bi bi-search me-1"></i>Buscar Producto
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="buscarProductoPrecios" placeholder="Nombre, código o categoría...">
+                                        <button class="btn btn-outline-secondary" type="button" id="btnBuscarPrecios">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="filtrarCategoriaPrecios" class="form-label">
+                                        <i class="bi bi-filter me-1"></i>Categoría
+                                    </label>
+                                    <select class="form-select" id="filtrarCategoriaPrecios">
+                                        <option value="">Todas las categorías</option>
+                                        <option value="abarrotes">Abarrotes</option>
+                                        <option value="lacteos">Lácteos</option>
+                                        <option value="bebidas">Bebidas</option>
+                                        <option value="limpieza">Limpieza</option>
+                                        <option value="carnes">Carnes</option>
+                                        <option value="panaderia">Panadería</option>
+                                        <option value="frutas">Frutas y Verduras</option>
+                                        <option value="otros">Otros</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <button class="btn btn-outline-secondary" id="limpiarFiltrosPrecios">
+                                        <i class="bi bi-arrow-clockwise me-1"></i>Limpiar Filtros
+                                    </button>
+                                    <span class="badge bg-primary align-self-center" id="contadorPrecios">0 productos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabla de precios -->
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-list-ul me-2"></i>Lista de Precios
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="tablaPrecios">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Código</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Categoría</th>
+                                            <th scope="col">Precio Compra</th>
+                                            <th scope="col">Precio Venta</th>
+                                            <th scope="col">Margen</th>
+                                            <th scope="col">Stock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaPrecios">
+                                        <!-- Los productos se cargarán aquí -->
+                                        <tr id="sinProductosPrecios">
+                                            <td colspan="7" class="text-center text-muted py-5">
+                                                <i class="bi bi-tag display-1 d-block mb-3"></i>
+                                                <h5>No hay productos en el inventario</h5>
+                                                <p class="mb-0">Agrega productos desde la página de Inventario</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="Precios.js"></script>
+    </body>
+</html>
