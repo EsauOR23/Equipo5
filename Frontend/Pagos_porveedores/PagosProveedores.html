@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Abarrotes ABD - Pagos a Proveedores</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="PagosProveedores.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="Login.html">
+                    <i class="bi bi-shop me-2"></i>Abarrotes ABD
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="MenuDueño.html" id="registrarVentaBtn">
+                                <i class="bi bi-cart-plus me-1"></i>Registrar Venta
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Inventario.html" id="inventarioBtn">
+                                <i class="bi bi-boxes me-1"></i>Inventario
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Precios.html" id="clientesBtn">
+                                <i class="bi bi-tag me-1"></i>Consultar Precios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Reportes.html" id="reportesBtn">
+                                <i class="bi bi-graph-up me-1"></i>Reportes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="PagosProveedores.html" id="configuracionBtn">
+                                <i class="bi bi-truck me-1"></i>Pagos a Proveedores
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="navbar-text text-white">
+                        <i class="bi bi-person-circle me-1"></i>Usuario: <span class="fw-bold">Dueño</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenido principal -->
+        <main class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="display-5 mb-0">
+                            <i class="bi bi-truck text-primary me-2"></i>Pagos a Proveedores
+                        </h1>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" id="exportarPagosBtn" title="Exportar Historial de Pagos">
+                                <i class="bi bi-file-earmark-excel me-1"></i>Exportar Pagos
+                            </button>
+                            <button class="btn btn-success" id="nuevoPagoBtn" title="Registrar Nuevo Pago">
+                                <i class="bi bi-plus-circle me-1"></i>Nuevo Pago
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtros de búsqueda -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="buscarProveedor" class="form-label">
+                                        <i class="bi bi-search me-1"></i>Buscar Proveedor
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="buscarProveedor" placeholder="Nombre del proveedor...">
+                                        <button class="btn btn-outline-secondary" type="button" id="btnBuscarProveedor">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="filtrarMes" class="form-label">
+                                        <i class="bi bi-calendar me-1"></i>Mes
+                                    </label>
+                                    <select class="form-select" id="filtrarMes">
+                                        <option value="">Todos los meses</option>
+                                        <option value="01">Enero</option>
+                                        <option value="02">Febrero</option>
+                                        <option value="03">Marzo</option>
+                                        <option value="04">Abril</option>
+                                        <option value="05">Mayo</option>
+                                        <option value="06">Junio</option>
+                                        <option value="07">Julio</option>
+                                        <option value="08">Agosto</option>
+                                        <option value="09">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12">Diciembre</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="filtrarEstado" class="form-label">
+                                        <i class="bi bi-check-circle me-1"></i>Estado
+                                    </label>
+                                    <select class="form-select" id="filtrarEstado">
+                                        <option value="">Todos</option>
+                                        <option value="pagado">Pagado</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="vencido">Vencido</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <button class="btn btn-outline-secondary" id="limpiarFiltrosPagos">
+                                        <i class="bi bi-arrow-clockwise me-1"></i>Limpiar Filtros
+                                    </button>
+                                    <span class="badge bg-primary align-self-center" id="contadorPagos">0 pagos registrados</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabla de pagos -->
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-clock-history me-2"></i>Historial de Pagos
+                            </h5>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-primary btn-sm" id="filtrarPendientes">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Ver Pendientes
+                                </button>
+                                <button class="btn btn-outline-success btn-sm" id="filtrarPagados">
+                                    <i class="bi bi-check-circle me-1"></i>Ver Pagados
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="tablaPagos">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Proveedor</th>
+                                            <th scope="col">Día</th>
+                                            <th scope="col">Hora</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Método</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaPagos">
+                                        <!-- Los pagos se cargarán aquí -->
+                                        <tr id="sinPagos">
+                                            <td colspan="7" class="text-center text-muted py-5">
+                                                <i class="bi bi-truck display-1 d-block mb-3"></i>
+                                                <h5>No hay pagos registrados</h5>
+                                                <p class="mb-0">Registra tu primer pago usando el botón "Nuevo Pago"</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección de proveedores -->
+                    <div class="card shadow-sm mt-4">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-people me-2"></i>Proveedores Registrados
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="listaProveedores">
+                                <!-- Proveedores se cargarán aquí -->
+                                <div class="col-12 text-center text-muted py-3">
+                                    <i class="bi bi-person-plus display-4 d-block mb-2"></i>
+                                    <p class="mb-0">No hay proveedores registrados</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal para nuevo pago -->
+        <div class="modal fade" id="modalNuevoPago" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-plus-circle me-2"></i>Registrar Nuevo Pago
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formNuevoPago">
+                            <div class="mb-3">
+                                <label for="proveedorSelect" class="form-label">Proveedor</label>
+                                <select class="form-select" id="proveedorSelect" required>
+                                    <option value="">Seleccionar proveedor...</option>
+                                    <option value="distribuidora_la_esperanza">Distribuidora La Esperanza</option>
+                                    <option value="lacteos_san_antonio">Lácteos San Antonio</option>
+                                    <option value="carnicos_el_rancho">Cárnicos El Rancho</option>
+                                    <option value="bebidas_refrescantes">Bebidas Refrescantes S.A.</option>
+                                    <option value="limpieza_total">Limpieza Total</option>
+                                    <option value="panaderia_la_esperanza">Panadería La Esperanza</option>
+                                    <option value="frutas_y_verduras_frescas">Frutas y Verduras Frescas</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cantidadPago" class="form-label">Cantidad ($)</label>
+                                <input type="number" class="form-control" id="cantidadPago" min="1" step="0.01" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="metodoPago" class="form-label">Método de Pago</label>
+                                <select class="form-select" id="metodoPago" required>
+                                    <option value="">Seleccionar método...</option>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="transferencia">Transferencia Bancaria</option>
+                                    <option value="cheque">Cheque</option>
+                                    <option value="tarjeta">Tarjeta</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fechaPago" class="form-label">Fecha de Pago</label>
+                                <input type="date" class="form-control" id="fechaPago" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcionPago" class="form-label">Descripción (Opcional)</label>
+                                <textarea class="form-control" id="descripcionPago" rows="2" placeholder="Ej: Pago de factura #1234, compra de mercancía..."></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="confirmarPago">Registrar Pago</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="PagosProveedores.js"></script>
+    </body>
+</html>
