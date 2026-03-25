@@ -13,5 +13,9 @@ Descripción del proyecto:
     El núcleo del proyecto se enfoca de mannera prioritaria en la optimización del proceso de ventas, identificado como el eje central de la operación del negocio y, paradójicamente , el área con mayores deficiencias derivadas de la gestión manual
 
 Tecnologías utilizadas:
+Frontend: html5, javaScript y CSS
+Backend: Python 
+Base de datos: MySQL
+Servidor: local de nuestro propio dispositivo
 
 
