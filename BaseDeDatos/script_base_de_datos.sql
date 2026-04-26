@@ -1,3 +1,7 @@
+-- Crear y usar la base de datos EQUIPO5
+CREATE DATABASE IF NOT EXISTS EQUIPO5;
+USE EQUIPO5;
+
 CREATE TABLE Proveedor (
   id_proveedor INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre_empesa VARCHAR(50) NOT NULL,
@@ -16,7 +20,8 @@ CREATE TABLE Tipo (
 CREATE TABLE Usuario (
   id_usuario INT(10) NOT NULL AUTO_INCREMENT,
   usuario VARCHAR(20) NOT NULL,
-  contraseńa VARCHAR(15) NOT NULL,
+  contrasena VARCHAR(15) NOT NULL,
+  rol VARCHAR(20) NOT NULL DEFAULT 'trabajador',
   PRIMARY KEY(id_usuario)
 );
 
@@ -82,3 +87,8 @@ CREATE TABLE Producto (
     FOREIGN KEY (id_tipo) REFERENCES Tipo(id_tipo)
     ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+--Usuarios que usaran el sistema
+INSERT INTO Usuario (usuario, contrasena, rol) VALUES
+  ('dueño', 'dueño', 'dueño'),
+  ('trabajador', 'trabajador', 'trabajador');
