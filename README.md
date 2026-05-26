@@ -22,15 +22,18 @@ El núcleo del proyecto se enfoca de manera prioritaria en la optimización del 
 ## Tecnologías utilizadas:
 ---
 ### Frontend: 
-html5, javaScript y CSS
+- HTML5
+- JavaScript 
+- CSS3
 ---
 ### Backend: 
-Python + Flask
+- Python 
+- Flask
 ---
 ### Base de datos: 
-MySQL
+- MySQL
 ---
 ### Servidor: 
-Local de nuestro propio dispositivo
+- Local de nuestro propio dispositivo
 
 
