@@ -1,38 +1,78 @@
 // ═══════════════════════════════════════════════════════
-//  Navbar.js — Control de sesión y roles (Ventas)
+//  navbar.js — Control de sesión y roles para todas las páginas
+//  Incluir este archivo en TODOS los HTML antes de cerrar </body>
 // ═══════════════════════════════════════════════════════
 
 (function () {
 
+    // ── Páginas exclusivas del dueño ─────────────────────────────────────────
     const PAGINAS_SOLO_DUENO = ['Reportes.html'];
 
-    const PERMISOS = {
-        'Registrar Venta':     'todos',
-        'Inventario':          'todos',
-        'Consultar Precios':   'todos',
-        'Pagos a Proveedores': 'todos',
-        'Reportes':            'dueño'
-    };
+    // ── Permisos por rol ─────────────────────────────────────────────────────
+    //  Se identifica cada pestaña por una palabra clave que aparezca en el
+    //  href del enlace (más confiable que el texto, que puede traer íconos,
+    //  espacios o saltos de línea).
+    //  'todos' = cualquier rol puede verla.
+    const PERMISOS = [
+        { match: 'Ventas',      rol: 'todos' },
+        { match: 'Inventario',  rol: 'todos' },
+        { match: 'Precios',     rol: 'todos' },
+        { match: 'Proveedores', rol: 'todos' },
+        { match: 'Reportes',    rol: 'dueño' }  // Solo dueño
+    ];
 
     // ── 1. Verificar sesión ──────────────────────────────────────────────────
     const usuario = sessionStorage.getItem('usuario');
-    const rol     = sessionStorage.getItem('rol');
+    const rol     = (sessionStorage.getItem('rol') || '').trim().toLowerCase();
 
     if (!usuario || !rol) {
         window.location.href = '../Login/Login.html';
         return;
     }
 
-    // ── 2. Proteger página restringida ───────────────────────────────────────
+    // ── 2. Proteger página actual si es restringida ──────────────────────────
     const paginaActual = window.location.pathname.split('/').pop();
     if (PAGINAS_SOLO_DUENO.includes(paginaActual) && rol !== 'dueño') {
         alert('No tienes permiso para acceder a esta sección.');
-        window.location.href = '../Login/Login.html';
+        window.location.href = '../Ventas/Ventas.html';
         return;
     }
 
-    // ── 3. Inicializar navbar (compatible con DOM ya cargado o no) ───────────
-    function initNavbar() {
+    // ── Función que oculta las pestañas según el rol ─────────────────────────
+    function aplicarPermisos() {
+        const enlaces = document.querySelectorAll('.navbar-nav a.nav-link, .navbar-nav .nav-item');
+
+        enlaces.forEach(function (el) {
+            // Tomamos href y texto para comparar
+            const link = el.tagName === 'A' ? el : el.querySelector('a.nav-link');
+            if (!link) return;
+
+            const href  = (link.getAttribute('href') || '').toLowerCase();
+            const texto = (link.textContent || '').toLowerCase();
+
+            for (const permiso of PERMISOS) {
+                const clave = permiso.match.toLowerCase();
+                if (href.includes(clave) || texto.includes(clave)) {
+                    if (permiso.rol !== 'todos' && rol !== permiso.rol) {
+                        // Ocultar el <li> contenedor si existe, si no el propio enlace
+                        const contenedor = link.closest('.nav-item') || link;
+                        contenedor.style.display = 'none';
+                        // Por seguridad: deshabilitar la navegación aunque alguien
+                        // muestre el elemento desde el inspector
+                        link.setAttribute('href', '#');
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                        }, true);
+                    }
+                    break;
+                }
+            }
+        });
+    }
+
+    // ── 3. Inyectar datos de usuario + botón Salir + ocultar pestañas ────────
+    function init() {
         const navbarText = document.querySelector('.navbar-text');
         if (navbarText) {
             const colorBadge = rol === 'dueño' ? 'bg-warning text-dark' : 'bg-light text-primary';
@@ -47,33 +87,22 @@
                 </button>
             `;
 
-            document.getElementById('cerrarSesionNavbar').addEventListener('click', function () {
-                sessionStorage.clear();
-                window.location.href = '../Login/Login.html';
-            });
+            const btnSalir = document.getElementById('cerrarSesionNavbar');
+            if (btnSalir) {
+                btnSalir.addEventListener('click', function () {
+                    sessionStorage.clear();
+                    window.location.href = '../Login/Login.html';
+                });
+            }
         }
 
-        // Ocultar pestañas según rol
-        document.querySelectorAll('.navbar-nav .nav-item').forEach(function (item) {
-            const enlace = item.querySelector('a.nav-link');
-            if (!enlace) return;
-            const textoEnlace = enlace.textContent.trim();
-            for (const [nombre, rolRequerido] of Object.entries(PERMISOS)) {
-                if (textoEnlace.includes(nombre)) {
-                    if (rolRequerido !== 'todos' && rol !== rolRequerido) {
-                        item.style.display = 'none';
-                    }
-                    break;
-                }
-            }
-        });
+        aplicarPermisos();
     }
 
-    // Ejecutar cuando el DOM esté listo, sin importar si ya cargó o no
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initNavbar);
+        document.addEventListener('DOMContentLoaded', init);
     } else {
-        initNavbar();
+        init();
     }
 
 })();
