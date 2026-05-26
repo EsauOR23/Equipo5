@@ -10,7 +10,8 @@
 ---
 
 ### Descripción del proyecto:
-    El presente proyecto consiste en el análisis, diseño y desarrollo de un sistema de software a la medida para la Abarrotería "ABD", un negocio minorísta de carácter tradicional que opera en el sector de abarrotes y productos de consumo básico. La iniciativa surge como respuesta a la necesidad de modernizar y automatizar los procesos operativos y administrativos del establecimiento, los cuales, en su estado actual, se ejecutan de forma manual y carecen de integración, lo que limita su eficiencia, presición y capacidad de crecimiento.
+
+El presente proyecto consiste en el análisis, diseño y desarrollo de un sistema de software a la medida para la Abarrotería "ABD", un negocio minorísta de carácter tradicional que opera en el sector de abarrotes y productos de consumo básico. La iniciativa surge como respuesta a la necesidad de modernizar y automatizar los procesos operativos y administrativos del establecimiento, los cuales, en su estado actual, se ejecutan de forma manual y carecen de integración, lo que limita su eficiencia, presición y capacidad de crecimiento.
 
 ---
 
@@ -20,12 +21,16 @@ El núcleo del proyecto se enfoca de manera prioritaria en la optimización del 
 
 ## Tecnologías utilizadas:
 ---
-### Frontend: html5, javaScript y CSS
+### Frontend: 
+html5, javaScript y CSS
 ---
-### Backend: Python + Flask
+### Backend: 
+Python + Flask
 ---
-### Base de datos: MySQL
+### Base de datos: 
+MySQL
 ---
-### Servidor: local de nuestro propio dispositivo
+### Servidor: 
+Local de nuestro propio dispositivo
 
 
